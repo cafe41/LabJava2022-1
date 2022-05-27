@@ -1,5 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Card {
-    public List<Integer> Card;
-    Card = new ArrayList<>();
-    System.out.println.Card;
+    public List<Integer> Card = new ArrayList<>();
 }
