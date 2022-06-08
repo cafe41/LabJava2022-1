@@ -1,8 +1,9 @@
 package cardsSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Card {
-    private ArrayList<String> carta;
+    private List<String> carta;
 }
 

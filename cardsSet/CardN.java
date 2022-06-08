@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardN extends Card {
-    private ArrayList<String> carta;
+    private List<String> carta;
 
     //"Constructor"
     public CardN(List<String> elementos, int n, int j) { // n = orden, debe ser un número primo
@@ -18,7 +18,7 @@ public class CardN extends Card {
         this.carta = cartaN;
     }
 
-    public ArrayList<String> getCarta() {
+    public List<String> getCarta() {
         return carta;
     }
 }
