@@ -70,5 +70,18 @@ public class Dobble {
 
     //No veo necesario los setters (aún)
 
+    //dobble? (es válido el cardsSet?)
+    int dobbleValido(ArrayList<Card> cardsSet){
+        ArrayList<Integer> listaElementos = null;
+        for (int i = 1; i <= cardsSet.size(); i++) {
+            for (int j = 1; j <= numeroElementos; j++) {
+                if (!(listaElementos.contains(cardsSet.get(i).getCarta(j))))
+                listaElementos.add(cardsSet.get(i).getCarta(j));
+            }
+        }
+        return 0;
+    }
+
+    //Obtener n-ésima carta
 
 }
