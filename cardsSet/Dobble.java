@@ -70,18 +70,49 @@ public class Dobble {
 
     //No veo necesario los setters (aún)
 
-    //dobble? (es válido el cardsSet?)
-    int dobbleValido(ArrayList<Card> cardsSet){
-        ArrayList<Integer> listaElementos = null;
-        for (int i = 1; i <= cardsSet.size(); i++) {
-            for (int j = 1; j <= numeroElementos; j++) {
-                if (!(listaElementos.contains(cardsSet.get(i).getCarta(j))))
-                listaElementos.add(cardsSet.get(i).getCarta(j));
+    //dobbleValido (dobble?), método que verifica si es válido el cardsSet
+    //DOM: cardsSet (ArrayList<Card>)
+    //REC: boolean
+    boolean dobbleValido(ArrayList<Card> cardsSet){
+        ArrayList<String> listaElementos = null; //Se creará una lista donde irán todos los elementos
+        //Si al final la lista queda con elementos, significa que hay cartas que tienen elementos
+        for (int i = 0; i < cardsSet.size(); i++) {
+            for (int j = 0; j < numeroElementos; j++) {
+                if (!(listaElementos.contains(cardsSet.get(i).getElemento(j))))
+                    //si no contiene el elemento de la carta, lo agrega
+                    listaElementos.add(cardsSet.get(i).getElemento(j));
             }
         }
-        return 0;
+        //Segunda parte: Revisará carta por carta, como si jugara "Dobble".
+        //Si la carta contiene el elemento, este se eliminará de la lista.
+        for (int i = 0; i < cardsSet.size(); i++) {
+            for (int j = 0; j < numeroElementos; j++) {
+                for (int k = 0; k < numeroElementos; k++){
+                    if (cardsSet.get(i).getElemento(j) == listaElementos.get(k)){
+                        listaElementos.remove(k);
+                    }
+                }
+            }
+        }
+        //Tercera parte: comprueba que no quede nada en la lista, si queda retornará false, sino true
+        if (listaElementos.size() == 0) {
+            System.out.println("El conjunto de cartas es válido\n");
+            return true;
+        }
+        else {
+            System.out.println("El conjunto de cartas no es válido\n");
+            return false;
+        }
     }
 
-    //Obtener n-ésima carta
+    //ultimaCarta (Obtener n-ésima carta), función que obtiene la última carta del cardsSet
+    //interpreto la n-ésima carta, como la última carta de un conjunto de "n" cartas
+    Card ultimaCarta(){
+        Card nCarta= cardsSet.get(cardsSet.size()); //Asumiendo que el cardsSet no está vacío
+        return nCarta;
+    }
+
+
+
 
 }

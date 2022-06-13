@@ -1,13 +1,12 @@
 package cardsSet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Card {
     private List<String> carta;
 
-    public List<String> getCarta() {
-        return carta;
+    public String getElemento(int n) {
+            String elemento = carta.get(n);
+        return elemento;
     }
 }
-
