@@ -9,4 +9,9 @@ public abstract class Card {
             String elemento = carta.get(n);
         return elemento;
     }
+
+    @Override
+    public String toString() {
+        return "[" + carta + ']';
+    }
 }

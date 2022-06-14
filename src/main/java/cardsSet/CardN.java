@@ -9,10 +9,10 @@ public class CardN extends Card {
     //"Constructor"
     public CardN(List<String> elementos, int n, int j) { // n = orden, debe ser un número primo
         //Inicializamos variables
-        ArrayList<String> cartaN = null;
+        List<String> cartaN = new ArrayList<>();
         //Ciclo para crear una cartaN
         cartaN.add(elementos.get(1));
-        for (int k=1; k<=n; k++) {
+        for (int k=0; k<n; k++) {
             cartaN.add(elementos.get(n * j + (k+1)));
         }
         this.carta = cartaN;

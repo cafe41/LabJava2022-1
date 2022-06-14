@@ -2,19 +2,22 @@ package cardsSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Math.sqrt;
 
 public class Dobble {
-    private ArrayList<Card> cardsSet;
+    private List<Card> cardsSet;
     private int orden;
     private int numeroElementos;
     private int cantCartas;
 
     //Constructor
+    //DOM: List<String> X int X int
+    //REC: Dobble
     public Dobble(List<String> elementos, int numE, int maxC) {
         //Inicializamos cardsSet y "n"
-        ArrayList<Card> cardsSet = null; 
+        List<Card> cardsSet = new ArrayList<Card>();
         int n;
         //Asignamos valor a "n", que será el orden
         if (numE > 0) {
@@ -35,13 +38,13 @@ public class Dobble {
             cardsSet.add(carta1);
             if (maxC > 1){
                 //Para la "n" cantidad de cartas:
-                for (int j = 1; j <= n; j++) {
+                for (int j = 0; j < n; j++) {
                     CardN cartaN = new CardN(elementos, n, j);
                     cardsSet.add(cartaN);
                 }
                 //Para la "n cuadrado" cantidad de cartas:
-                for (int i = 1; i <= n; i++){
-                    for (int j = 1; j <= n; j++){
+                for (int i = 0; i < n; i++){
+                    for (int j = 0; j < n; j++){
                         CardN2 cartaN2 = new CardN2(elementos, n, i, j);
                         cardsSet.add(cartaN2);
                     }
@@ -55,7 +58,7 @@ public class Dobble {
     }
 
     //Getters
-    public ArrayList<Card> getCardsSet() {
+    public List<Card> getCardsSet() {
         return cardsSet;
     }
     public int getOrden() {
@@ -68,7 +71,19 @@ public class Dobble {
         return cantCartas;
     }
 
-    //No veo necesario los setters (aún)
+    //Setters
+    public void setCardsSet(ArrayList<Card> cardsSet) {
+        this.cardsSet = cardsSet;
+    }
+    public void setOrden(int orden) {
+        this.orden = orden;
+    }
+    public void setNumeroElementos(int numeroElementos) {
+        this.numeroElementos = numeroElementos;
+    }
+    public void setCantCartas(int cantCartas) {
+        this.cantCartas = cantCartas;
+    }
 
     //dobbleValido (dobble?), método que verifica si es válido el cardsSet
     //DOM: cardsSet (ArrayList<Card>)
@@ -88,7 +103,7 @@ public class Dobble {
         for (int i = 0; i < cardsSet.size(); i++) {
             for (int j = 0; j < numeroElementos; j++) {
                 for (int k = 0; k < numeroElementos; k++){
-                    if (cardsSet.get(i).getElemento(j) == listaElementos.get(k)){
+                    if (Objects.equals(cardsSet.get(i).getElemento(j), listaElementos.get(k))){
                         listaElementos.remove(k);
                     }
                 }
@@ -108,11 +123,19 @@ public class Dobble {
     //ultimaCarta (Obtener n-ésima carta), función que obtiene la última carta del cardsSet
     //interpreto la n-ésima carta, como la última carta de un conjunto de "n" cartas
     Card ultimaCarta(){
-        Card nCarta= cardsSet.get(cardsSet.size()); //Asumiendo que el cardsSet no está vacío
-        return nCarta;
+        //Asumiendo que el cardsSet no está vacío
+        return cardsSet.get(cardsSet.size()-1);
     }
 
-
-
-
+    //toString, método que devuelve "Dobble" como string
+    //DOM: VOID
+    //REC: String
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "\n" +
+                "cardsSet = " + cardsSet + "\n" +
+                "orden = " + orden + "\n" +
+                "numeroElementos = " + numeroElementos + "\n" +
+                "cantCartas = " + cantCartas + "\n";
+    }
 }
