@@ -1,6 +1,9 @@
 package game;
 
-public class Player {
+public abstract class Player {
     //Player será el jugador y en "DobbleGame" habrá una lista de jugadores.
-    //Podría crear una clase abstracta con Player y CPU
+    String user;
+    int nJugador;
+    boolean CPU;
+    int puntaje;
 }
