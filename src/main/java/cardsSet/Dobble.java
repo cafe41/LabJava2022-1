@@ -34,18 +34,18 @@ public class Dobble {
         //Ciclos
         if (maxC > 0) { //Si el usuario pidió más de 0 cartas (lol)
             //Para la primera carta:
-            Card1 carta1 = new Card1(elementos, n);
+            Card carta1 = new Card(elementos, n);
             cardsSet.add(carta1);
             if (maxC > 1){
                 //Para la "n" cantidad de cartas:
                 for (int j = 0; j < n; j++) {
-                    CardN cartaN = new CardN(elementos, n, j);
+                    Card cartaN = new Card(elementos, n, j);
                     cardsSet.add(cartaN);
                 }
                 //Para la "n cuadrado" cantidad de cartas:
                 for (int i = 0; i < n; i++){
                     for (int j = 0; j < n; j++){
-                        CardN2 cartaN2 = new CardN2(elementos, n, i, j);
+                        Card cartaN2 = new Card(elementos, n, i, j);
                         cardsSet.add(cartaN2);
                     }
                 }

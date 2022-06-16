@@ -2,7 +2,7 @@ package game;
 
 import java.util.List;
 
-public class CPU extends Player {
+public class CPU implements Player {
     private String user;  //Ej: "CPU 1"
     private int nJugador; //EJ: 2 [jugador1, cpu1]
     private boolean CPU;  //CPU: true
@@ -21,7 +21,16 @@ public class CPU extends Player {
 
     //Getters:
     public String getUser() {return user;}
-    public int getnJugador() {return nJugador;}
+    public int getNumeroJugador() {return nJugador;}
     public boolean isCPU() {return CPU;}
     public int getPuntaje() {return puntaje;}
+
+    //Otros métodos
+
+    //agregarPuntaje, método que agrega un puntaje "agregado" al puntaje.
+    //DOM: int
+    //REC: void
+    public void agregarPuntaje(int agregado){
+        setPuntaje(getPuntaje() + agregado);
+    }
 }

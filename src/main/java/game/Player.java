@@ -1,9 +1,7 @@
 package game;
 
-public abstract class Player {
+public interface Player {
     //Player será el jugador y en "DobbleGame" habrá una lista de jugadores.
-    String user;
-    int nJugador;
-    boolean CPU;
-    int puntaje;
+
+    void agregarPuntaje(int agregado);
 }
