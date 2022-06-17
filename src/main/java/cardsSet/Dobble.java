@@ -10,14 +10,15 @@ public class Dobble {
     private List<Card> cardsSet;
     private int orden;
     private int numeroElementos;
-    private int cantCartas;
+    private int cantMaxCartas;
+    private List<String> listaElementos; //Decidí guardar la lista de elementos para usos futuros
 
     //Constructor
     //DOM: List<String> X int X int
     //REC: Dobble
     public Dobble(List<String> elementos, int numE, int maxC) {
         //Inicializamos cardsSet y "n"
-        List<Card> cardsSet = new ArrayList<Card>();
+        List<Card> cardsSet = new ArrayList<>();
         int n;
         //Asignamos valor a "n", que será el orden
         if (numE > 0) {
@@ -38,13 +39,13 @@ public class Dobble {
             cardsSet.add(carta1);
             if (maxC > 1){
                 //Para la "n" cantidad de cartas:
-                for (int j = 0; j < n; j++) {
+                for (int j = 1; j <= n; j++) {
                     Card cartaN = new Card(elementos, n, j);
                     cardsSet.add(cartaN);
                 }
                 //Para la "n cuadrado" cantidad de cartas:
-                for (int i = 0; i < n; i++){
-                    for (int j = 0; j < n; j++){
+                for (int i = 1; i <= n; i++){
+                    for (int j = 1; j <= n; j++){
                         Card cartaN2 = new Card(elementos, n, i, j);
                         cardsSet.add(cartaN2);
                     }
@@ -54,22 +55,24 @@ public class Dobble {
         this.cardsSet = cardsSet;
         this.orden = n;
         this.numeroElementos = numE;
-        this.cantCartas = maxC;
+        this.cantMaxCartas = maxC;
+        this.listaElementos = elementos;
+    }
+    //"Constructor" En caso de que necesite ser definido desde otro cardsSet
+    public Dobble(List<Card> cardsSetAjeno, Dobble otroDobble) {
+        this.cardsSet = cardsSetAjeno;
+        this.orden = otroDobble.getOrden();
+        this.numeroElementos = otroDobble.getNumeroElementos();
+        this.cantMaxCartas = otroDobble.getCantMaxCartas();
+        this.listaElementos = otroDobble.getListaElementos();
     }
 
     //Getters
-    public List<Card> getCardsSet() {
-        return cardsSet;
-    }
-    public int getOrden() {
-        return orden;
-    }
-    public int getNumeroElementos() {
-        return numeroElementos;
-    }
-    public int getCantCartas() {
-        return cantCartas;
-    }
+    public List<Card> getCardsSet() {return cardsSet;}
+    public int getOrden() {return orden;}
+    public int getNumeroElementos() {return numeroElementos;}
+    public int getCantMaxCartas() {return cantMaxCartas;}
+    public List<String> getListaElementos() {return listaElementos;}
 
     //Setters
     public void setCardsSet(ArrayList<Card> cardsSet) {
@@ -82,14 +85,14 @@ public class Dobble {
         this.numeroElementos = numeroElementos;
     }
     public void setCantCartas(int cantCartas) {
-        this.cantCartas = cantCartas;
+        this.cantMaxCartas = cantCartas;
     }
 
     //dobbleValido (dobble?), método que verifica si es válido el cardsSet
     //DOM: cardsSet (ArrayList<Card>)
     //REC: boolean
-    boolean dobbleValido(ArrayList<Card> cardsSet){
-        ArrayList<String> listaElementos = null; //Se creará una lista donde irán todos los elementos
+    public boolean dobbleValido(){
+        List<String> listaElementos = new ArrayList<>(); //Se creará una lista donde irán todos los elementos
         //Si al final la lista queda con elementos, significa que hay cartas que tienen elementos
         for (int i = 0; i < cardsSet.size(); i++) {
             for (int j = 0; j < numeroElementos; j++) {
@@ -102,8 +105,8 @@ public class Dobble {
         //Si la carta contiene el elemento, este se eliminará de la lista.
         for (int i = 0; i < cardsSet.size(); i++) {
             for (int j = 0; j < numeroElementos; j++) {
-                for (int k = 0; k < numeroElementos; k++){
-                    if (Objects.equals(cardsSet.get(i).getElemento(j), listaElementos.get(k))){
+                for (int k = 0; k < listaElementos.size(); k++) {
+                    if (Objects.equals(cardsSet.get(i).getElemento(j), listaElementos.get(k))) {
                         listaElementos.remove(k);
                     }
                 }
@@ -120,7 +123,7 @@ public class Dobble {
         }
     }
 
-    //ultimaCarta (Obtener n-ésima carta), función que obtiene la última carta del cardsSet
+    //ultimaCarta (Obtener n-ésima carta), método que obtiene la última carta del cardsSet
     //interpreto la n-ésima carta, como la última carta de un conjunto de "n" cartas
     Card ultimaCarta(){
         //Asumiendo que el cardsSet no está vacío
@@ -136,6 +139,37 @@ public class Dobble {
                 "cardsSet = " + cardsSet + "\n" +
                 "orden = " + orden + "\n" +
                 "numeroElementos = " + numeroElementos + "\n" +
-                "cantCartas = " + cantCartas + "\n";
+                "cantMaxCartas = " + cantMaxCartas + "\n";
+    }
+
+    //recortarSet, método que toma el cardsSet y le resta "n" cantidad de elementos, para que cumpla cierto largo
+    //DOM: int
+    //REC: List<Card>
+    public List<Card> recortarSet(int n){
+        List<Card> cardsSetNuevo = new ArrayList<Card>();
+        for (int i = 0; i < n; i++){
+            cardsSetNuevo.add(getCardsSet().get(i));
+        }
+        return cardsSetNuevo;
+    }
+
+    //missingCards, método que retornará las cartas que le faltan al cardsSet
+    //DOM: Dobble
+    //REC: List<Card> (cardsSet)
+    public List<Card> missingCards(Dobble setOriginal){
+        if (cardsSet == setOriginal.getCardsSet()){
+            return null;
+        }
+        else {
+            List<Card> cartasPerdidas = new ArrayList<>();
+            //Ciclo que "restará" el set de cartas original al set de cartas actual
+            for (int i = 0; i < setOriginal.getCardsSet().size(); i++){
+                //Si el setCartas NO contiene una carta del setOriginal:
+                if (!(cardsSet.contains(setOriginal.getCardsSet().get(i)))){
+                    cartasPerdidas.add(setOriginal.getCardsSet().get(i));
+                }
+            }
+            return cartasPerdidas;
+        }
     }
 }

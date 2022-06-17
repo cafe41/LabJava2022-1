@@ -1,5 +1,7 @@
 package game;
 
+import cardsSet.Card;
+
 import java.util.List;
 
 public class CPU implements Player {
@@ -7,6 +9,7 @@ public class CPU implements Player {
     private int nJugador; //EJ: 2 [jugador1, cpu1]
     private boolean CPU;  //CPU: true
     private int puntaje;  //EJ: 29
+    private List<Card> mano;
 
     public CPU(String user, List<Player> jugadores) {
         this.nJugador = jugadores.size() + 1;
@@ -24,6 +27,7 @@ public class CPU implements Player {
     public int getNumeroJugador() {return nJugador;}
     public boolean isCPU() {return CPU;}
     public int getPuntaje() {return puntaje;}
+    public List<Card> getMano() {return mano;}
 
     //Otros métodos
 
@@ -32,5 +36,14 @@ public class CPU implements Player {
     //REC: void
     public void agregarPuntaje(int agregado){
         setPuntaje(getPuntaje() + agregado);
+    }
+
+    @Override
+    public String toString() {
+        return  "Nombre: \"" + user + '\"' +
+                ", Número de Jugador: " + nJugador +
+                ", CPU: Si" +
+                ", Puntaje: " + puntaje +
+                ", Mano: " + mano + "\n";
     }
 }

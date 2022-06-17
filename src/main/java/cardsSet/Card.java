@@ -6,12 +6,13 @@ import java.util.List;
 public class Card {
     private List<String> carta;
 
+    //Card tendrá 3 constructores, uno para cada "tipo" de carta (carta1, cartaN y cartaN2).
     //"Constructor"
     public Card(List<String> elementos, int n) { // n = orden, debe ser un número primo
         //Inicializamos variables
         List<String> carta1 = new ArrayList<>();
         //Ciclo para crear la carta1
-        for (int i = 0; i < n+1; i++) {
+        for (int i = 1; i <= n+1; i++) {
             carta1.add(elementos.get(i));
         }
         this.carta = carta1;
@@ -21,8 +22,8 @@ public class Card {
         //Inicializamos variables
         List<String> cartaN = new ArrayList<String>();
         //Ciclo para crear una cartaN
-        cartaN.add(elementos.get(0));
-        for (int k=0; k<n; k++) {
+        cartaN.add(elementos.get(1));
+        for (int k=1; k<=n; k++) {
             cartaN.add(elementos.get(n * j + (k+1)));
         }
         this.carta = cartaN;
@@ -32,13 +33,12 @@ public class Card {
         //Inicializamos variables
         List<String> cartaN2 = new ArrayList<>();
         //Ciclo para crear una cartaN
-        cartaN2.add(elementos.get(i));
-        for (int k=0; k<n; k++) {
+        cartaN2.add(elementos.get(i+1));
+        for (int k=1; k<=n; k++) {
             cartaN2.add(elementos.get(n+2+n*(k-1)+(((i-1)*(k-1)+j-1)%n)));
         }
         this.carta = cartaN2;
     }
-
 
     public List<String> getCarta() {
         return carta;
@@ -50,7 +50,7 @@ public class Card {
     @Override
     public String toString() {
         //Realmente esto solo imprime la carta, java acepta un objeto dentro de su "print",
-        //por lo que definir un toString es redundante.
+        //por lo que definir un toString es redundante, pero lo pide el enunciado del lab.
         return "" + carta;
     }
 }
