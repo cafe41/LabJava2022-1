@@ -69,7 +69,9 @@ public class Menu {
             else if (elecciones.getElection() == 0) {
                 System.out.print("\nHa elegido salir.");
             }
-            else {System.out.print("\nNo ha ingresado una opción válida.");}
+            else {System.out.print("\nNo ha ingresado una opción válida.");
+                menuPrincipal(game);
+            }
     }
 
     //menuJugar
@@ -77,7 +79,8 @@ public class Menu {
         System.out.println("\n" + "----------Menú Jugar----------" + "\n" +
                 "Bienvenido al menú para jugar el juego.");
         if (game.getCantidadJugadores() == 0){
-            System.out.println("\nPor favor, agregue jugadores al juego.\n");
+            System.out.println("\nNo posee jugadores, se iniciará el modo \"demo\".\n");
+            optionDemoMode(game);
         }
         else if (game.getCantidadJugadores() == 1){
             optionSinglePlayer(game);
@@ -86,6 +89,10 @@ public class Menu {
             optionMultiPlayer(game);
         }
         else {System.out.println("\nPor favor, consiga una cantidad válida de jugadores.\n");}
+        return game;
+    }
+    private DobbleGame optionDemoMode(DobbleGame game){
+        //CPU vs CPU
         return game;
     }
     private DobbleGame optionSinglePlayer(DobbleGame game){
@@ -118,7 +125,6 @@ public class Menu {
                 //Ganará quien junte más puntaje (puntaje = cartas X sumatoria(15 - turno))
         return game;
     }
-
 
     //menuMazoDeCartas
     private DobbleGame menuMazoDeCartas(DobbleGame game) {
