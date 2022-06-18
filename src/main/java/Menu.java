@@ -1,5 +1,6 @@
 import cardsSet.Card;
 import cardsSet.Dobble;
+import game.CPU;
 import game.DobbleGame;
 import game.Humano;
 
@@ -41,7 +42,7 @@ public class Menu {
         Scanner entradaEscaner = new Scanner(System.in);
         System.out.println("\n" + "------------------------DOBBLE------------------------" + "\n" +
                 "Bienvenido al juego Dobble seleccione una opción del menú para continuar:" +
-                "\n" + "1.- Jugar al juego, requiere un mazo de cartas y jugadores." +
+                "\n" + "1.- Jugar al juego, requiere un mazo de cartas." +
                 "\n" + "2.- Crear/Editar el mazo de cartas." +
                 "\n" + "3.- Agregar/Eliminar un jugador." +
                 "\n" + "4.- Visualizar estado del juego." +
@@ -76,11 +77,18 @@ public class Menu {
 
     //menuJugar
     private DobbleGame menuJugar(DobbleGame game) {
-        System.out.println("\n" + "----------Menú Jugar----------" + "\n" +
-                "Bienvenido al menú para jugar el juego.");
+        System.out.print("\n" + "----------Menú Jugar----------" + "\n" +
+                "Bienvenido al menú para jugar el juego." +
+                "\n\n" + "Los jugadores son: " + game.getNombreJugadores() +
+                "\n" + "El mazo de cartas es: ");
+        if (game.getMazoCartas()==null){ System.out.println(game.getMazoCartas() +"\n");}
+        else {System.out.println(game.getMazoCartas().getCardsSet() +"\n");}
+        //
         if (game.getCantidadJugadores() == 0){
-            System.out.println("\nNo posee jugadores, se iniciará el modo \"demo\".\n");
+            if (game.getMazoCartas()!=null){
             optionDemoMode(game);
+            }
+            else {System.out.println("Necesita un mazo para jugar, volverá al menú anterior.");}
         }
         else if (game.getCantidadJugadores() == 1){
             optionSinglePlayer(game);
@@ -92,7 +100,33 @@ public class Menu {
         return game;
     }
     private DobbleGame optionDemoMode(DobbleGame game){
-        //CPU vs CPU
+        //Reiniciamos election
+        election = 99;
+        System.out.println("Seleccione el modo de juego:");
+        //Esto llamará al modo de juego CPU vs. CPU
+        Scanner entradaEscaner = new Scanner(System.in);
+        while (election != 0){
+            System.out.print("1.- CPU vs. CPU (No posee jugadores)" +
+                    "\n" +   "0.- Volver" +
+                    "\n\n" + "Ingrese la opción que desea: ");
+            election = entradaEscaner.nextInt();
+            if (election == 1) {
+                //Agregamos 2 cpu para que jueguen entre sí.
+                Dobble cartasAnteriores = new Dobble(game.getMazoCartas().getCardsSet()
+                        , game.getMazoCartas()); //Instance del mazo para reiniciarlo luego
+                CPU cpu1 = new CPU("CPU01",game.getJugadores());
+                CPU cpu2 = new CPU("CPU02",game.getJugadores());
+                game.getJugadores().add(cpu1);
+                game.getJugadores().add(cpu2);
+                //Llamamos al modo de juego
+                game.modoDemo();
+                game.setMazoCartas(cartasAnteriores); //Reiniciamos el mazo
+                game.getJugadores().remove(0);
+                game.getJugadores().remove(0);
+                System.out.println("Fin de la partida.\n\n" +
+                        "Seleccione un modo de juego si desea volver a jugar:");
+            }
+        }
         return game;
     }
     private DobbleGame optionSinglePlayer(DobbleGame game){
@@ -106,6 +140,9 @@ public class Menu {
                 //Cada turno, el jugador tendrá 10 segundos para juntar dos cartas
                 //Si queda 1 carta o menos, el jugador ganará
                 //El jugador pierde si se acaban los 10 segundos.
+        System.out.println("\nWIP. Solo funciona el modo \"Demo\", el cual es CPU vs CPU" +
+                " y solo se ejecuta si no hay jugadores.\n" +
+                "Por favor, borre los jugadores si desea probar el juego.");
         return game;
     }
     private DobbleGame optionMultiPlayer(DobbleGame game){
@@ -123,6 +160,9 @@ public class Menu {
                 //Tendrán 15 segundos para completar su turno, deben juntar dos cartas
                 //Las IA demorarán 10 segundos en juntar dos cartas (aleatorias)
                 //Ganará quien junte más puntaje (puntaje = cartas X sumatoria(15 - turno))
+        System.out.println("\nWIP. Solo funciona el modo \"Demo\", el cual es CPU vs CPU" +
+                " y solo se ejecuta si no hay jugadores.\n" +
+                "Por favor, borre los jugadores si desea probar el juego.");
         return game;
     }
 
@@ -292,9 +332,10 @@ public class Menu {
     private DobbleGame menuJugador(DobbleGame game) {
         Scanner entradaEscaner = new Scanner(System.in);
         System.out.println("\n" + "----------Menú Jugadores----------" + "\n" +
-                "Bienvenido al menú para .");
+                "Bienvenido al menú para agregar un jugador");
         while (election != 0){
-            System.out.println("Seleccione una opción del menú para continuar:" +
+            System.out.println("La lista de jugadores es " + game.getNombreJugadores() +
+                    "\n\n" + "Seleccione una opción del menú para continuar:" +
                     "\n" + "1.- Agregar Jugador." +
                     "\n" + "2.- Eliminar Jugador." +
                     "\n" + "0.- Volver.");
@@ -447,11 +488,10 @@ public class Menu {
         else {
             System.out.println("En la partida:" +
                     "\nEs el turno de: " + game.getJugadores().get(game.getTurnoActual()) +
-                    "Los puntajes son: " + game.obtenerPuntajes() +
+                    "Los puntajes son: " + game.getPuntajes() +
                     "\n" + game.vaGanando() + " va ganando con " + game.puntajeMayor() + " puntos." +
                     "\nEl modo de juego es: " + game.getModoDeJuego() + ".\n");
         }
         return game;
     }
-
 }

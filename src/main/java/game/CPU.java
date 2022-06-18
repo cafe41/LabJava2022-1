@@ -13,7 +13,7 @@ public class CPU implements Player {
 
     public CPU(String user, List<Player> jugadores) {
         this.nJugador = jugadores.size() + 1;
-        this.user = "CPU";
+        this.user = user;
         this.CPU = true;
         this.puntaje = 0;
     }
@@ -39,11 +39,27 @@ public class CPU implements Player {
     }
 
     @Override
+    //Override de toString
     public String toString() {
         return  "Nombre: \"" + user + '\"' +
                 ", Número de Jugador: " + nJugador +
                 ", CPU: Si" +
                 ", Puntaje: " + puntaje +
                 ", Mano: " + mano + "\n";
+    }
+
+    @Override
+    //Override de equals
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CPU)) return false;
+
+        CPU cpu = (CPU) o;
+
+        if (nJugador != cpu.nJugador) return false;
+        if (isCPU() != cpu.isCPU()) return false;
+        if (getPuntaje() != cpu.getPuntaje()) return false;
+        if (getUser() != null ? !getUser().equals(cpu.getUser()) : cpu.getUser() != null) return false;
+        return getMano() != null ? getMano().equals(cpu.getMano()) : cpu.getMano() == null;
     }
 }

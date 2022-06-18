@@ -172,4 +172,34 @@ public class Dobble {
             return cartasPerdidas;
         }
     }
+
+    //elementoComun, método que obtiene la posición de dos cartas a través de índices
+    //y retorna el elemento en común de dos cartas
+    //DOM: int X int
+    //REC: String
+    public String elementoComun(int n1, int n2){
+        Card carta1 = getCardsSet().get(n1);
+        Card carta2 = getCardsSet().get(n2);
+        for (int i = 0; i < carta1.getCarta().size() ;i++){
+            if (carta2.getCarta().contains(carta1.getElemento(i)))
+            return carta1.getElemento(i);
+        }
+        return null;
+    }
+
+    @Override
+    //Override de equals
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Dobble)) return false;
+
+        Dobble dobble = (Dobble) o;
+
+        if (getOrden() != dobble.getOrden()) return false;
+        if (getNumeroElementos() != dobble.getNumeroElementos()) return false;
+        if (getCantMaxCartas() != dobble.getCantMaxCartas()) return false;
+        if (getCardsSet() != null ? !getCardsSet().equals(dobble.getCardsSet()) : dobble.getCardsSet() != null)
+            return false;
+        return getListaElementos() != null ? getListaElementos().equals(dobble.getListaElementos()) : dobble.getListaElementos() == null;
+    }
 }

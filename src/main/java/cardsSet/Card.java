@@ -20,7 +20,7 @@ public class Card {
     //"Constructor 2" Overload
     public Card(List<String> elementos, int n, int j) { // n = orden, debe ser un número primo
         //Inicializamos variables
-        List<String> cartaN = new ArrayList<String>();
+        List<String> cartaN = new ArrayList<>();
         //Ciclo para crear una cartaN
         cartaN.add(elementos.get(1));
         for (int k=1; k<=n; k++) {
@@ -40,17 +40,27 @@ public class Card {
         this.carta = cartaN2;
     }
 
+    //Getters
     public List<String> getCarta() {
         return carta;
     }
-    public String getElemento(int n) {
-        return carta.get(n);
+    public String getElemento(int n) {return carta.get(n);}
+
+    @Override
+    //Override de toString
+    public String toString() {
+        //Realmente esto solo imprime la carta
+        return "" + carta;
     }
 
     @Override
-    public String toString() {
-        //Realmente esto solo imprime la carta, java acepta un objeto dentro de su "print",
-        //por lo que definir un toString es redundante, pero lo pide el enunciado del lab.
-        return "" + carta;
+    //Override de equals
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Card)) return false;
+
+        Card card = (Card) o;
+
+        return getCarta() != null ? getCarta().equals(card.getCarta()) : card.getCarta() == null;
     }
 }

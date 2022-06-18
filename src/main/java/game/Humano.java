@@ -20,31 +20,67 @@ public class Humano implements Player {
     }
 
     //Setters: El nombre de usuario y el puntaje se pueden cambiar
-    public void setUser(String user) {this.user = user;}
-    public void setPuntaje(int puntaje) {this.puntaje = puntaje;}
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
 
     //Getters:
-    public String getUser() {return user;}
-    public int getNumeroJugador() {return nJugador;}
-    public boolean isCPU() {return CPU;}
-    public int getPuntaje() {return puntaje;}
-    public List<Card> getMano() {return mano;}
+    public String getUser() {
+        return user;
+    }
+
+    public int getNumeroJugador() {
+        return nJugador;
+    }
+
+    public boolean isCPU() {
+        return CPU;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public List<Card> getMano() {
+        return mano;
+    }
 
     //Otros métodos
 
     //agregarPuntaje, método que agrega un puntaje "agregado" al puntaje.
     //DOM: int
     //REC: void
-    public void agregarPuntaje(int agregado){
+    public void agregarPuntaje(int agregado) {
         setPuntaje(getPuntaje() + agregado);
     }
 
     @Override
+    //Override de toString
     public String toString() {
         return  "Nombre: \"" + user + '\"' +
                 ", Número de Jugador: " + nJugador +
                 ", CPU: No" +
                 ", Puntaje: " + puntaje +
                 ", Mano: " + mano + "\n";
+    }
+
+    @Override
+    //Override de equals
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Humano)) return false;
+
+        Humano humano = (Humano) o;
+
+        if (nJugador != humano.nJugador) return false;
+        if (isCPU() != humano.isCPU()) return false;
+        if (getPuntaje() != humano.getPuntaje()) return false;
+        if (getUser() != null ? !getUser().equals(humano.getUser()) : humano.getUser() != null)
+            return false;
+        return getMano() != null ? getMano().equals(humano.getMano()) : humano.getMano() == null;
     }
 }
